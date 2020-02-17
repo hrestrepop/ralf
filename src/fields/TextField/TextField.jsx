@@ -1,30 +1,42 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { withFormControl } from '../../state-holders'
+
 import './TextField.scss'
 
-const TextField = ({ input, meta, className }) => {
+const TextField = props => {
+  console.log('props', props)
+  const {
+    invalid,
+    onChange,
+    input: { className, ...input }
+  } = props
+
   return (
-    <input
-      className={`input ${
-        meta.showErrors && meta.invalid ? 'is-danger' : ''
-      } ${className}`}
-      {...input}
-    />
+    <>
+      <input
+        className={`input ${invalid ? 'is-danger' : ''} ${className}`}
+        {...input}
+        onChange={onChange}
+      />
+      {invalid && <p className="help is-danger">This email is invalid</p>}
+    </>
   )
 }
 
 TextField.propTypes = {
   input: PropTypes.shape({
-    name: PropTypes.string.isRequired
-  }).isRequired,
-  meta: PropTypes.shape({}),
-  className: PropTypes.string
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    className: PropTypes.string
+  }).isRequired
 }
 
 TextField.defaultProps = {
-  meta: {},
-  className: ''
+  input: {
+    className: ''
+  }
 }
 
-export default TextField
+export default withFormControl(TextField)

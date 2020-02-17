@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import Section from './components/Section'
+import FormControl from './fields/FormControl'
 import TextField from './fields/TextField'
 
 import './index.scss'
@@ -8,9 +10,18 @@ import './index.scss'
 const App = () => {
   return (
     <div className="app">
-      <p>This is a field</p>
-
-      <TextField input={{ name: 'testField' }} />
+      <Section title="TextField with validations">
+        <FormControl label="Name:">
+          <TextField
+            input={{
+              name: 'testField'
+            }}
+            onUpdate={({ value }) => {
+              console.log('value extgg', value)
+            }}
+          />
+        </FormControl>
+      </Section>
     </div>
   )
 }
