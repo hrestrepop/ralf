@@ -10,6 +10,7 @@ const TextField = props => {
   const {
     invalid,
     onChange,
+    errors,
     input: { className, ...input }
   } = props
 
@@ -20,7 +21,13 @@ const TextField = props => {
         {...input}
         onChange={onChange}
       />
-      {invalid && <p className="help is-danger">This email is invalid</p>}
+      {invalid &&
+        errors.length > 0 &&
+        errors.map((error, key) => (
+          <p className="help is-danger" key={key}>
+            {error}
+          </p>
+        ))}
     </>
   )
 }

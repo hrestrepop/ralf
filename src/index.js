@@ -5,6 +5,8 @@ import Section from './components/Section'
 import FormControl from './fields/FormControl'
 import TextField from './fields/TextField'
 
+import { required, email } from './validators'
+
 import './index.scss'
 
 const App = () => {
@@ -14,11 +16,13 @@ const App = () => {
         <FormControl label="Name:">
           <TextField
             input={{
-              name: 'testField'
+              name: 'testField',
+              className: 'test-class'
             }}
             onUpdate={({ value }) => {
-              console.log('value extgg', value)
+              console.log('value is', value)
             }}
+            validators={[required(), email()]}
           />
         </FormControl>
       </Section>
