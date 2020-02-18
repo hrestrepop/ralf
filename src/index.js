@@ -5,7 +5,7 @@ import Section from './components/Section'
 import FormControl from './fields/FormControl'
 import TextField from './fields/TextField'
 
-import { required, email } from './validators'
+import { required, email, minLength } from './validators'
 
 import './index.scss'
 
@@ -17,12 +17,14 @@ const App = () => {
           <TextField
             input={{
               name: 'testField',
-              className: 'test-class'
+              className: 'test-class',
+              placeholder: 'Place your name...',
+              disabled: false
             }}
-            onUpdate={({ value }) => {
-              console.log('value is', value)
+            onUpdate={updated => {
+              console.log('updated is', updated)
             }}
-            validators={[required(), email()]}
+            validators={[required(), email(), minLength()]}
           />
         </FormControl>
       </Section>

@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 
 const withState = Field => fieldProps => {
-  const [props, setProps] = useState({
+  const [props, updateState] = useState({
     value: '',
-    status: null,
+    status: 'VALID',
     valid: true,
     invalid: true,
     enabled: true,
-    disabled: true,
+    disabled: false,
+    readOnly: false,
     errors: [],
     validators: [],
     dirty: false
@@ -15,7 +16,7 @@ const withState = Field => fieldProps => {
 
   const stateProps = {
     ...props,
-    updateState: setProps
+    updateState
   }
 
   return <Field {...stateProps} {...fieldProps} />

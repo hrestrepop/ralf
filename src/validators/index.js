@@ -1,11 +1,8 @@
-import * as _ from 'ramda'
-
 export const validate = value => {
   return validators => {
-    const errors = _.pipe(
-      _.map(validator => validator(value)),
-      _.filter(result => !!result)
-    )(validators)
+    const errors = validators
+      .map(validator => validator(value))
+      .filter(result => !!result)
 
     return {
       errors,
@@ -28,14 +25,22 @@ export const required = (message = "This field can't be empty") => value => {
   return value ? null : message
 }
 
+export const minLength = (
+  len = 3,
+  message = 'This field should have the minimum required length'
+) => value => {
+  return value && value.length < len ? message : null
+}
+
+export const maxLength = (
+  len = 20,
+  message = 'This field should not exceed the maximum length'
+) => value => {
+  return value && value.length > len ? message : null
+}
+
 export const sameAs = key => (value, values) => {
   const twin = values[key] || ''
 
   return value === twin ? null : 'This field must be the same!'
-}
-
-export default {
-  email,
-  required,
-  sameAs
 }

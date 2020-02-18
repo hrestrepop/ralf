@@ -8,23 +8,26 @@ import './TextField.scss'
 const TextField = props => {
   console.log('props', props)
   const {
+    valid,
     invalid,
+    dirty,
     onChange,
     errors,
     input: { className, ...input }
   } = props
 
+  const showErrors = (invalid || !valid) && errors.length > 0 && dirty
+
   return (
     <>
       <input
-        className={`input ${invalid ? 'is-danger' : ''} ${className}`}
+        className={`input ${showErrors ? 'is-danger' : ''} ${className}`}
         {...input}
         onChange={onChange}
       />
-      {invalid &&
-        errors.length > 0 &&
+      {showErrors &&
         errors.map((error, key) => (
-          <p className="help is-danger" key={key}>
+          <p className="help is-danger is-block" key={key}>
             {error}
           </p>
         ))}
@@ -36,13 +39,18 @@ TextField.propTypes = {
   input: PropTypes.shape({
     name: PropTypes.string.isRequired,
     type: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
+    placeholder: PropTypes.string,
+    required: PropTypes.bool,
+    readOnly: PropTypes.bool
   }).isRequired
 }
 
 TextField.defaultProps = {
   input: {
-    className: ''
+    className: '',
+    required: false,
+    readOnly: true
   }
 }
 

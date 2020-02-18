@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import { pick } from 'ramda'
 
 import { validate } from '../validators'
 
@@ -7,22 +8,44 @@ const withHandlers = Field => fieldProps => {
 
   const props = {
     onChange: useCallback(
-      evt => {
-        const targetValue = evt.target.value
+      event => {
+        const targetValue = event.target.value
         const validationResult = validate(targetValue)
 
-        updateState({
+        const udpatedState = {
           ...fieldProps,
           value: targetValue,
+          dirty: true,
           ...validationResult(validators)
-        })
+        }
 
-        onUpdate({ value: targetValue, evt })
+        updateState(udpatedState)
+
+        const mappedProps = pick(
+          [
+            'value',
+            'status',
+            'valid',
+            'invalid',
+            'enabled',
+            'disabled',
+            'errors',
+            'validators',
+            'dirty',
+            'input',
+            'patchValue',
+            'reset',
+            'setValue'
+          ],
+          udpatedState
+        )
+
+        onUpdate({ ...mappedProps, event })
       },
       [value]
     ),
-    patchValue: () => {},
-    reset: () => {},
+    patchValue: formData => updateState(formData),
+    reset: () => updateState({}),
     setValue: () => {}
   }
 
