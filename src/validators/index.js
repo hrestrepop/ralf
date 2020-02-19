@@ -1,17 +1,3 @@
-export const validate = value => {
-  return validators => {
-    const errors = validators
-      .map(validator => validator(value))
-      .filter(result => !!result)
-
-    return {
-      errors,
-      invalid: !!errors.length,
-      valid: !errors.length
-    }
-  }
-}
-
 export const email = (message = 'Invalid email address') => value =>
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
     ? message

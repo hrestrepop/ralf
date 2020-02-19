@@ -9,9 +9,9 @@ const withState = Field => fieldProps => {
     enabled: true,
     disabled: false,
     readOnly: false,
+    dirty: false,
     errors: [],
-    validators: [],
-    dirty: false
+    validators: []
   })
 
   const stateProps = {

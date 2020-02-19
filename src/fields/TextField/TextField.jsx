@@ -6,7 +6,6 @@ import { withFormControl } from '../../state-holders'
 import './TextField.scss'
 
 const TextField = props => {
-  console.log('props', props)
   const {
     valid,
     invalid,
