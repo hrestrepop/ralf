@@ -5,22 +5,17 @@ import { withFormControl } from '../../state-holders'
 
 import './TextField.scss'
 
-const TextField = props => {
-  const {
-    valid,
-    invalid,
-    dirty,
-    onChange,
-    errors,
-    input: { className, ...input }
-  } = props
-
-  const showErrors = (invalid || !valid) && errors.length > 0 && dirty
-
+const TextField = ({
+  onChange,
+  errors,
+  showErrors,
+  input: { className, ...input }
+}) => {
   return (
     <>
       <input
-        className={`input ${showErrors ? 'is-danger' : ''} ${className}`}
+        autoComplete="off"
+        className={`input ${className} ${showErrors ? 'is-danger' : ''}`}
         {...input}
         onChange={onChange}
       />

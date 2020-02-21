@@ -14,14 +14,15 @@ export const validate = value => {
   }
 }
 
-const withValidators = Field => ({ value, validators, ...fieldProps }) => {
+const withValidators = Field => fieldProps => {
+  const { value, dirty, valid, invalid, validators, errors } = fieldProps
   const validationResult = validate(value)
+  const showErrors = (invalid || !valid) && errors.length > 0 && dirty
 
   const props = {
-    value,
-    validators,
     ...fieldProps,
-    ...validationResult(validators)
+    ...validationResult(validators),
+    showErrors
   }
 
   return <Field {...props} />

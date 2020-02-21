@@ -19,7 +19,7 @@ const Section = ({ children, title }) => {
 
 Section.propTypes = {
   title: PropTypes.string,
-  children: PropTypes.element
+  children: PropTypes.arrayOf(PropTypes.element)
 }
 
 Section.defaultProps = {
