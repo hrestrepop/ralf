@@ -8,7 +8,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "storybook": "start-storybook",
-    "build-storybook": "build-storybook -c .storybook",
+    "build-storybook": "build-storybook -c .storybook -o docs",
+    "deploy-storybook": "storybook-to-ghpages",
     "test": "jest"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
     "@storybook/react": "^5.3.13",
+    "@storybook/storybook-deployer": "^2.8.2",
     "babel-loader": "^8.0.6",
     "css-loader": "^2.1.1",
     "jest": "^25.1.0",
