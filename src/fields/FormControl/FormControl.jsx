@@ -1,26 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const FormControl = ({ children, label, isLoading }) => {
+const FormControl = ({ children, label }) => {
   return (
     <div className="field">
       {!!label && <label className="label">{label}</label>}
-      <div className={`control  ${isLoading ? 'is-loading' : ''}`}>
-        {children}
-      </div>
+      {children}
     </div>
   )
 }
 
 FormControl.propTypes = {
-  children: PropTypes.element,
-  label: PropTypes.string,
-  isLoading: PropTypes.bool
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element)
+  ]).isRequired,
+  label: PropTypes.string
 }
 
 FormControl.defaultProps = {
-  label: '',
-  isLoading: false
+  label: ''
 }
 
 export default FormControl

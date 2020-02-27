@@ -1,51 +1,47 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { compose } from 'ramda'
 
-import { withFormControl } from '../../state-holders'
+import { withFormControl, withTextField } from '../../state-holders'
+// import { Control } from '../../wrappers'
 
 import './TextField.scss'
 
-const TextField = ({
-  onChange,
-  errors,
-  showErrors,
-  input: { className, ...input }
-}) => {
+const TextField = props => {
+  // console.log('TextField', props)
+  const {
+    onChange,
+    showErrors,
+    value,
+    input: { className, ...input }
+  } = props
+
   return (
-    <>
-      <input
-        autoComplete="off"
-        className={`input ${className} ${showErrors ? 'is-danger' : ''}`}
-        {...input}
-        onChange={onChange}
-      />
-      {showErrors &&
-        errors.map((error, key) => (
-          <p className="help is-danger is-block" key={key}>
-            {error}
-          </p>
-        ))}
-    </>
+    <input
+      autoComplete="off"
+      className={`input ${className} ${showErrors ? 'is-danger' : ''}`}
+      {...input}
+      value={value}
+      onChange={onChange}
+    />
   )
 }
 
 TextField.propTypes = {
   input: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    type: PropTypes.string,
+    type: PropTypes.oneOf(['text', 'password', 'email', 'tel']),
     className: PropTypes.string,
-    placeholder: PropTypes.string,
-    required: PropTypes.bool,
-    readOnly: PropTypes.bool
-  }).isRequired
+    placeholder: PropTypes.string
+  }).isRequired,
+  handleOnChange: PropTypes.func.isRequired
 }
 
 TextField.defaultProps = {
   input: {
-    className: '',
-    required: false,
-    readOnly: true
+    type: 'text',
+    className: ''
   }
 }
 
-export default withFormControl(TextField)
+export default compose(withFormControl, withTextField)(TextField)

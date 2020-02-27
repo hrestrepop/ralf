@@ -1,4 +1,5 @@
 import withFormControl from './with-control'
-import withValidators from './with-validators'
+import withTextField from './with-field'
+import withAutocomplete from './with-autocomplete'
 
-export { withFormControl, withValidators }
+export { withFormControl, withTextField, withAutocomplete }
