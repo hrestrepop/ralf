@@ -3,27 +3,29 @@ import PropTypes from 'prop-types'
 import { compose } from 'ramda'
 
 import { withFormControl, withTextField } from '../../state-holders'
-// import { Control } from '../../wrappers'
+import { ErrorList } from '../../wrappers'
 
 import './TextField.scss'
 
-const TextField = props => {
-  // console.log('TextField', props)
-  const {
-    onChange,
-    showErrors,
-    value,
-    input: { className, ...input }
-  } = props
-
+const TextField = ({
+  input: { className, ...input },
+  onChange,
+  showErrors,
+  errors,
+  value,
+  showErrorList
+}) => {
   return (
-    <input
-      autoComplete="off"
-      className={`input ${className} ${showErrors ? 'is-danger' : ''}`}
-      {...input}
-      value={value}
-      onChange={onChange}
-    />
+    <>
+      <input
+        autoComplete="off"
+        className={`input ${className} ${showErrors ? 'is-danger' : ''}`}
+        {...input}
+        value={value}
+        onChange={onChange}
+      />
+      {showErrorList && <ErrorList showErrors={showErrors} errors={errors} />}
+    </>
   )
 }
 
@@ -34,14 +36,16 @@ TextField.propTypes = {
     className: PropTypes.string,
     placeholder: PropTypes.string
   }).isRequired,
-  handleOnChange: PropTypes.func.isRequired
+  handleOnChange: PropTypes.func,
+  showErrorList: PropTypes.bool
 }
 
 TextField.defaultProps = {
   input: {
     type: 'text',
     className: ''
-  }
+  },
+  showErrorList: false
 }
 
 export default compose(withFormControl, withTextField)(TextField)

@@ -1,10 +1,12 @@
 import React from 'react'
+import { action } from '@storybook/addon-actions'
 
 import Section from '../../components/Section'
 import TextField from './TextField'
 import FormControl from '../FormControl'
-
 import { required, minLength, email } from '../../validators'
+
+const actionTag = action('Field Props:')
 
 export default { title: 'Text Field' }
 
@@ -18,6 +20,25 @@ export const withDefault = () => (
           placeholder: 'Place your name...',
           disabled: false
         }}
+        handleOnChange={actionTag}
+      />
+    </FormControl>
+  </Section>
+)
+
+export const withErrorsWrapper = () => (
+  <Section title="Build-in errors wrapper component">
+    <FormControl label="Company Name:">
+      <TextField
+        input={{
+          name: 'title',
+          className: 'test-class',
+          placeholder: 'Place your name...',
+          disabled: false
+        }}
+        handleOnChange={actionTag}
+        showErrorList={true}
+        validators={[required(), minLength(4), email()]}
       />
     </FormControl>
   </Section>
@@ -33,6 +54,7 @@ export const withRequiredValidation = () => (
           placeholder: 'Place your name...',
           disabled: false
         }}
+        handleOnChange={actionTag}
         validators={[required()]}
       />
     </FormControl>
@@ -49,6 +71,7 @@ export const withMinValidation = () => (
           placeholder: 'Place your title with 4 chars min...',
           disabled: false
         }}
+        handleOnChange={actionTag}
         validators={[required(), minLength(4)]}
       />
     </FormControl>
@@ -66,6 +89,7 @@ export const withEmailValidation = () => (
           disabled: false,
           type: 'email'
         }}
+        handleOnChange={actionTag}
         validators={[required(), email()]}
       />
     </FormControl>

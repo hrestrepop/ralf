@@ -1,14 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { compose } from 'ramda'
 
-import { withFormControl } from '../../state-holders'
+import { withFormControl, withTextField } from '../../state-holders'
+import { ErrorList } from '../../wrappers'
+
 import './TextAreaField.scss'
 
 const TextAreaField = ({
+  input: { className, ...input },
   onChange,
   errors,
   showErrors,
-  input: { className, ...input }
+  showErrorList
 }) => (
   <>
     <textarea
@@ -17,12 +21,7 @@ const TextAreaField = ({
       {...input}
       onChange={onChange}
     />
-    {showErrors &&
-      errors.map((error, key) => (
-        <p className="help is-danger is-block" key={key}>
-          {error}
-        </p>
-      ))}
+    {showErrorList && <ErrorList showErrors={showErrors} errors={errors} />}
   </>
 )
 
@@ -31,18 +30,16 @@ TextAreaField.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string,
     className: PropTypes.string,
-    placeholder: PropTypes.string,
-    required: PropTypes.bool,
-    readOnly: PropTypes.bool
-  }).isRequired
+    placeholder: PropTypes.string
+  }).isRequired,
+  showErrorList: PropTypes.string
 }
 
 TextAreaField.defaultProps = {
   input: {
-    className: '',
-    required: false,
-    readOnly: true
-  }
+    className: ''
+  },
+  showErrorList: true
 }
 
-export default withFormControl(TextAreaField)
+export default compose(withFormControl, withTextField)(TextAreaField)

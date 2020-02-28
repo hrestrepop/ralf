@@ -22,6 +22,7 @@ const updateValidations = fieldProps => {
 
   return {
     ...fieldProps,
+    status: valid ? 'VALID' : 'INVALID',
     dirty: true,
     showErrors,
     valid,

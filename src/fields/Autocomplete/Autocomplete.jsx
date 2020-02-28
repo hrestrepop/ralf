@@ -38,7 +38,14 @@ const FieldList = ({
         input.value && input.value[keyId] === item[keyId] ? 'active' : ''
       }`}
     >
-      <a href="#" onClick={evt => onSelect({ evt, value: item[keyId], index })}>
+      <a
+        href="#"
+        onClick={evt => {
+          evt.preventDefault()
+
+          onSelect({ evt, value: item[keyId], index })
+        }}
+      >
         {getView(item)}
       </a>
     </li>
@@ -46,6 +53,7 @@ const FieldList = ({
 }
 
 const Autocomplete = props => {
+  // TODO: add min param validation
   const { onChange, min, openSuggestions, selectedValue, input } = props
 
   return (

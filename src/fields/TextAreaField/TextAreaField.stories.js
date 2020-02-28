@@ -1,10 +1,12 @@
 import React from 'react'
+import { action } from '@storybook/addon-actions'
 
+import { required, minLength } from '../../validators'
 import Section from '../../components/Section'
 import TextAreaField from './TextAreaField'
 import FormControl from '../FormControl'
 
-import { required, minLength } from '../../validators'
+const actionTag = action('Field Props:')
 
 export default { title: 'Textarea Field' }
 
@@ -18,6 +20,7 @@ export const withBasicSettings = () => (
           placeholder: 'Place your description here...',
           disabled: false
         }}
+        handleOnChange={actionTag}
       />
     </FormControl>
   </Section>
@@ -33,6 +36,7 @@ export const withRequiredValidation = () => (
           placeholder: 'Place your description here...',
           disabled: false
         }}
+        handleOnChange={actionTag}
         validators={[required()]}
       />
     </FormControl>
@@ -49,6 +53,7 @@ export const withMinValidation = () => (
           placeholder: 'Write at least 10 characteres here...',
           disabled: false
         }}
+        handleOnChange={actionTag}
         validators={[minLength(10)]}
       />
     </FormControl>
@@ -65,7 +70,12 @@ export const withCustomMessage = () => (
           placeholder: 'Place your description here...',
           disabled: false
         }}
-        validators={[required('Please fill this right away :| so that this custom message disappears')]}
+        handleOnChange={actionTag}
+        validators={[
+          required(
+            'Please fill this right away :| so that this custom message disappears'
+          )
+        ]}
       />
     </FormControl>
   </Section>
